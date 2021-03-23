@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <table border = 1>
+      <thead>
+        <td> Id </td>
+        <td> Item </td>
+        <td> Protein </td>
+        <td> Fat </td>
+        <td> Delete </td>
+        <td> Update </td>
+      </thead>
+      {% for row in rows %}
+        <tr>
+          <td> {{row['id']}} </td>
+          <td> {{row['item']}} </td>
+          <td> {{row['protein']}} </td>
+          <td> {{row['fat']}} </td>
+          <td> <a href="/delete" method ='POST'> delete </a> </td>
+          <td> <a href="/update"> update </a> </td>
+        </tr>
+      {% endfor %}
+      </table>
+  </body>
+</html>
