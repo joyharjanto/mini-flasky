@@ -20,8 +20,8 @@
           <td> {{row['item']}} </td>
           <td> {{row['protein']}} </td>
           <td> {{row['fat']}} </td>
-          <td> <a href="/delete" method ='POST'> delete </a> </td>
-          <td> <a href="/update"> update </a> </td>
+          <td> <form method="POST"> <input type = "button" value = "delete"> </input> </form> </td>
+          <td> <form method="POST"> <input type = "button" value = "update"> </input> </form> </td>
         </tr>
       {% endfor %}
       </table>

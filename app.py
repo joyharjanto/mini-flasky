@@ -35,13 +35,14 @@ def home():
     results = cur.fetchall()
     return render_template("homepage.html", rows = results)
 
-@app.route('/delete', methods = ['POST', 'GET'])
-def delete():
-    if request.method == "POST":
-        print("here dleet")
-    else:
-        print("whopsie")
-    return 'deleted'
+@app.route('/delete/<id>', methods=['DELETE'])
+def guide_delete(id):
+    con = sql.connect("database.db")
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    cur.execute("select * from food where id=?", id)
+    cur.commit()
+    return "item deletted"
 
 @app.route('/update')
 def update():
