@@ -35,18 +35,29 @@ def home():
     results = cur.fetchall()
     return render_template("homepage.html", rows = results)
 
-@app.route('/delete/<id>', methods=['DELETE'])
+# curl -i -X "DELETE" http://7.0.0.1:8080/randomguess/20
+
+@app.route('/randomguess/<id>', methods=['DELETE'])
 def guide_delete(id):
     con = sql.connect("database.db")
     con.row_factory = sql.Row
     cur = con.cursor()
-    cur.execute("select * from food where id=?", id)
-    cur.commit()
-    return "item deletted"
+    cur.execute("DELETE FROM food WHERE id=?", (id,))
+    con.commit()
+    return "{} deleted".format(id)
 
-@app.route('/update')
-def update():
-    return 'update'
+@app.route('/update/<item>/<protein>/<fat>/<id>', methods=['PUT'])
+def update(item, protein, fat, id):
+    con = sql.connect("database.db")
+    con.row_factory = sql.Row
+    cur = con.cursor()
+    print('this far')
+    # col = ('crackers', 10, 14, 4)
+    cur.execute("UPDATE food SET item = ?, protein = ?, fat = ? WHERE id=?", (item,protein,fat,id))
+    # cur.execute("INSERT INTO food (item, protein, fat) values (?, ?, ?)", ('chips', 5, 10))
+    con.commit()
+    print('success')
+    return "updated"
 
 @app.route('/individual', methods=['GET'])
 def api_route():
@@ -104,4 +115,4 @@ def api_route():
     return "{} has a protein of {} g and fat of {} g compared to the average of {} g and {} g respectively.".format(results[0][1], results[0][2], results[0][3], avg_protein, avg_fat)
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug = True, port=8080)
